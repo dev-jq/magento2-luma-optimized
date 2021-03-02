@@ -43,7 +43,7 @@ font-display: swap;
 11. Veb Vitals:
 - pay attention for 'above the fold' elements
 - better LCP: if 'above the fold' is an image or background image (e.g. slider) add to <head> preload tag to this image:
-  <link rel="preload" as="image" href="path/to/your/image.jpg">
+  < link rel="preload" as="image" href="path/to/your/image.jpg" >
 - NEVER use lazylaod for images that are in 'above the fold'!
 - dalay 3rd party scripts (GTM, Analytics, FB, etc.) => https://github.com/biggerpicturestudio/delaying-3rd-parties
 -
