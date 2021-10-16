@@ -1,4 +1,4 @@
-# fasterM2
+# Luma_vital - customized and optizmed Mageto 2 theme
 Speed-up your Magento 2 frontend performance! Google PageSpeed / Chrome Lighthouse over 95/100 points (on Desktop) and over 80/100 points on mobile devices. It's possible!
 
 1. Optimize images (=> https://tinypng.com)
