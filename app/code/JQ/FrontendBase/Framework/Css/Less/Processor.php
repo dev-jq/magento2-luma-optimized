@@ -1,0 +1,97 @@
+<?php
+
+namespace JQ\FrontendBase\Framework\Css\Less;
+
+use Magento\Framework\App\State;
+use Magento\Framework\Css\PreProcessor\File\Temporary;
+use Magento\Framework\Phrase;
+use Magento\Framework\View\Asset\ContentProcessorException;
+use Magento\Framework\View\Asset\ContentProcessorInterface;
+use Magento\Framework\View\Asset\File;
+use Magento\Framework\View\Asset\Source;
+use Psr\Log\LoggerInterface;
+
+class Processor extends \Magento\Framework\Css\PreProcessor\Adapter\Less\Processor
+{
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @var State
+     */
+    private $appState;
+
+    /**
+     * @var Source
+     */
+    private $assetSource;
+
+    /**
+     * @var Temporary
+     */
+    private $temporaryFile;
+
+    /**
+     * Constructor
+     *
+     * @param LoggerInterface $logger
+     * @param State $appState
+     * @param Source $assetSource
+     * @param Temporary $temporaryFile
+     */
+    public function __construct(
+        LoggerInterface $logger,
+        State $appState,
+        Source $assetSource,
+        Temporary $temporaryFile
+    ) {
+        $this->logger = $logger;
+        $this->appState = $appState;
+        $this->assetSource = $assetSource;
+        $this->temporaryFile = $temporaryFile;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function processContent(File $asset)
+    {
+        $path = $asset->getPath();
+        try {
+            $parser = new \Less_Parser(
+                [
+                    'relativeUrls' => false,
+                    'sourceMap' => $this->appState->getMode() === State::MODE_DEVELOPER, // generate source maps for CSS in developer mode
+                    'compress' => $this->appState->getMode() !== State::MODE_DEVELOPER
+                ]
+            );
+
+            $content = $this->assetSource->getContent($asset);
+
+            if (trim($content) === '') {
+                throw new ContentProcessorException(
+                    new Phrase('Compilation from source: LESS file is empty: ' . $path)
+                );
+            }
+
+            $tmpFilePath = $this->temporaryFile->createFile($path, $content);
+
+            gc_disable();
+            $parser->parseFile($tmpFilePath, '');
+            $content = $parser->getCss();
+            gc_enable();
+
+            if (trim($content) === '') {
+                throw new ContentProcessorException(
+                    new Phrase('Compilation from source: LESS file is empty: ' . $path)
+                );
+            } else {
+                return $content;
+            }
+        } catch (\Exception $e) {
+            throw new ContentProcessorException(new Phrase($e->getMessage()));
+        }
+    }
+}

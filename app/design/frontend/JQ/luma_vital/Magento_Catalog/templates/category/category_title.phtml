@@ -1,0 +1,54 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magento\Theme\Block\Html\Title
+ * @var $block \JQ\FrontendBase\Helper\Data
+ */
+
+$helper = $this->helper(\JQ\FrontendBase\Helper\Data::class);
+$cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
+$titleHtml = '';
+if (trim($block->getPageHeading())) {
+    $titleHtml = '<span class="base" data-ui-id="page-title-wrapper" '
+        . $block->getAddBaseAttribute()
+        . '>'
+        . $block->getPageHeading()
+        . '</span>';
+}
+?>
+<?php if ($titleHtml) : ?>
+    <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
+
+        <?php
+        $requestFullActionName = $helper->getRequestFullActionName();
+
+        if (($requestFullActionName == 'catalogsearch_result_index') || ($requestFullActionName == 'catalogsearch_advanced_result')) {
+            $blockName = 'search_result_list';
+        } else {
+            $blockName = 'category.products.list';
+        }
+
+        $categoryProductListBlock = $this->getLayout()->getBlock($blockName);
+        $productListCollection = $categoryProductListBlock->getLoadedProductCollection();
+
+        $dataCount = '';
+        if ($productListCollection->getSize() && $productListCollection->getSize() > 0) {
+            $dataCount = __('('.$productListCollection->getSize().')');
+        }
+
+        ?>
+
+        <h1 data-count="<?php echo $dataCount; ?>" class="page-title category-title"
+            <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
+            <?php if ($block->getAddBaseAttributeAria()) : ?>
+                aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+            <?php endif; ?>>
+            <?= /* @noEscape */ $titleHtml ?>
+        </h1>
+        <?= $block->getChildHtml() ?>
+    </div>
+<?php endif; ?>

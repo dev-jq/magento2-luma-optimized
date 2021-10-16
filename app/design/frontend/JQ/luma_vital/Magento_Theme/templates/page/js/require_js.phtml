@@ -1,0 +1,212 @@
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0">
+<?= $block->getChildHtml('head.additional.first') ?>
+
+<?php
+$routeName = $this->getRequest()->getRouteName() ;
+$controllerName = $this->getRequest()->getControllerName();
+$actionName = $this->getRequest()->getActionName();
+
+$config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
+$minified = null;
+if($config->getConfigValue('dev/js/minify_files')) {
+    $minified = '.min';
+}
+?>
+
+<script>
+    var BASE_URL = '<?= $block->escapeUrl($block->getBaseUrl()) ?>';
+    var require = {
+        "baseUrl": "<?= $block->escapeUrl($block->getViewFileUrl('/')) ?>"
+    };
+</script>
+
+<?php /* With user interaction for load RequireJS */ ?>
+<?php if(
+($routeName == 'cms') ||
+($routeName == 'catalog' && $controllerName == 'product' && $actionName == 'view') ||
+($routeName == 'catalog' && $controllerName == 'category' && $actionName == 'view') ||
+($routeName == 'catalogsearch' && $controllerName == 'result' && $actionName == 'index')):
+?>
+    <?php if($this->helper('JQ\FrontendBase\Helper\Data')->isFrontend()): ?>
+
+        <?php if($config->getConfigValue('dev/js/minify_files')): ?>
+            <script src="<?php echo $this->getViewFileUrl('JQ_WebVitals::js/require-min-file-resolver') . $minified . '.js'; ?>"></script>
+        <?php else: ?>
+            <script src="<?php echo $this->getViewFileUrl('requirejs/require') . $minified . '.js'; ?>"></script>
+        <?php endif; ?>
+        <script src="<?php echo $this->getViewFileUrl('mage/requirejs/mixins') . $minified . '.js'; ?>"></script>
+
+        <script>
+            var requireFullReady = false;
+            var critical_config = {
+                'waitSeconds': 0,
+                'shim': {
+                    'jquery/ui': ['jquery'],
+                    'jquery/jquery-migrate': ['jquery'],
+                    'matchMedia': {
+                        'exports': 'mediaCheck'
+                    },
+                },
+                'paths': {
+                    'text': 'mage/requirejs/text',
+                    'domReady': 'requirejs/domReady',
+                    'ui/template': 'Magento_Ui/templates',
+                    'jquery-ui-modules': 'jquery/ui-modules',
+                    'jquery/validate': 'jquery/jquery.validate',
+                    'jquery/jquery-storageapi': 'Magento_Cookie/js/jquery.storageapi.extended'
+                },
+                'config': {
+                    'mixins': {
+                        'jquery': {
+                            'jquery/patches/jquery': false
+                        }
+                    }
+                },
+                'map': {
+                    '*': {
+                        'ko': 'knockoutjs/knockout',
+                        'knockout': 'knockoutjs/knockout',
+                        'mageUtils': 'mage/utils/main',
+                        'rjsResolver': 'mage/requirejs/resolver',
+                        uiElement: 'Magento_Ui/js/lib/core/element/element',
+                        uiCollection: 'Magento_Ui/js/lib/core/collection',
+                        uiComponent: 'Magento_Ui/js/lib/core/collection',
+                        uiClass: 'Magento_Ui/js/lib/core/class',
+                        uiEvents: 'Magento_Ui/js/lib/core/events',
+                        uiRegistry: 'Magento_Ui/js/lib/registry/registry',
+                        consoleLogger: 'Magento_Ui/js/lib/logger/console-logger',
+                        uiLayout: 'Magento_Ui/js/core/renderer/layout',
+                        escaper: 'Magento_Security/js/escaper',
+                        priceUtils: 'Magento_Catalog/js/price-utils',
+                        mageTranslationDictionary: 'Magento_Translation/js/mage-translation-dictionary',
+                        'menu': 'mage/menu',
+                        'mage/calendar': 'js/empty',
+                        'Magento_Ui/js/lib/knockout/bindings/color-picker': 'js/empty',
+                        'Magento_Ui/js/lib/knockout/bindings/datepicker': 'js/empty',
+                        'jquery-ui-modules/datepicker': 'js/empty',
+                        'jquery-ui-modules/timepicker': 'js/empty',
+                        loadPlayer: 'Magento_ProductVideo/js/load-player',
+                        fotoramaVideoEvents: 'Magento_ProductVideo/js/fotorama-add-video-events',
+                        catalogGallery: 'Magento_Catalog/js/gallery',
+                        catalogAddToCart: 'Magento_Catalog/js/catalog-add-to-cart'
+                    }
+                }
+            };
+            require.config(critical_config);
+
+            <?php /* All pages:  */ ?>
+            require(["jquery", "mage/menu"], function ($) {});
+
+            <?php /* Only on home page:  */ ?>
+            <?php if(($routeName == 'cms' && $controllerName == 'index' && $actionName == 'index')): ?>
+
+            <?php endif; ?>
+
+            <?php /* Only on category page:  */ ?>
+            <?php if(
+            ($routeName == 'catalog' && $controllerName == 'category' && $actionName == 'view') ||
+            ($routeName == 'catalogsearch' && $controllerName == 'result' && $actionName == 'index')):
+            ?>
+
+            <?php endif; ?>
+
+            <?php /* Only on product page:  */ ?>
+            <?php if(($routeName == 'catalog' && $controllerName == 'product' && $actionName == 'view')): ?>
+                <?php $productType = $this->helper('JQ\FrontendBase\Helper\Data')->getProductType(); ?>
+                <?php if($productType == 'configurable'): ?>
+                    require(["Magento_Swatches/js/swatch-renderer", "Magento_Swatches/js/catalog-add-to-cart"], function ($) {});
+                <?php endif; ?>
+                require(['fotorama/fotorama', 'mage/gallery/gallery', 'matchMedia', 'mage/template', 'uiClass'], function ($) {});
+            <?php endif; ?>
+
+            <?php /* All pages after  */ ?>
+            require(["Magento_Theme/js/view/messages"], function () {});
+
+            <?php /* init widgets with custom attributes: "text/x-magento-init-faster" and "data-mage-init-faster" */ ?>
+            function mageInitFaster() {
+                require(["JQ_WebVitals/js/mage/apply/scripts-faster", "JQ_WebVitals/js/mage/apply/main-faster", "mage/apply/main"], function (scriptsfaster, magefaster, mage) {
+                    magefaster.apply();
+                });
+            }
+            mageInitFaster();
+            require(["jquery"], function ($) {
+                $('body').on('contentUpdated', function () {
+                    mageInitFaster();
+                });
+            });
+            <?php /* END init widgets with custom attributes: "text/x-magento-init-faster" and "data-mage-init-faster" */ ?>
+
+            window.addEventListener('load', (event) => {
+                document.addEventListener('scroll', afterUserInteraction, {once : false});
+                document.addEventListener('mousemove', afterUserInteraction, {once : false});
+                document.addEventListener('click', afterUserInteraction, {once : false});
+                document.addEventListener('touch', afterUserInteraction, {once : false});
+            });
+            var afterUserInteraction = function() {
+                if(requireFullReady == true) {return;}
+                var fasterScripts = document.querySelectorAll('[type="text/x-magento-init-faster"]');
+                if(fasterScripts != null) {
+                    fasterScripts.forEach(function(script) {
+                        script.setAttribute("type", "text/x-magento-init");
+                    });
+                }
+                var requirejs_config_script = document.createElement('script');
+                requirejs_config_script.id = 'requirejs-config-script';
+                requirejs_config_script.async = false;
+                requirejs_config_script.src = "<?php echo $this->getViewFileUrl('requirejs-config') . $minified . '.js'; ?>";
+                if(document.getElementById("requirejs-config-script") == null) {
+                    document.head.append(requirejs_config_script);
+                }
+                requirejs_config_script.addEventListener("load", fullReady, false);
+            }
+            var fullReady = function () {
+                requireFullReady = true;
+                initLazyScripts();
+            }
+
+            <?php /* Fix JS log: [Violation] Added non-passive event listener to a scroll-blocking 'touchstart' event. */ ?>
+            require(['jquery'], function($){
+                jQuery.event.special.touchstart = {
+                    setup: function( _, ns, handle ){
+                        if ( ns.includes("noPreventDefault") ) {
+                            this.addEventListener("touchstart", handle, { passive: false });
+                        } else {
+                            this.addEventListener("touchstart", handle, { passive: true });
+                        }
+                    }
+                };
+                jQuery.event.special.touchmove = {
+                    setup: function( _, ns, handle ){
+                        if ( ns.includes("noPreventDefault") ) {
+                            this.addEventListener("touchmove", handle, { passive: false });
+                        } else {
+                            this.addEventListener("touchmove", handle, { passive: true });
+                        }
+                    }
+                };
+            });
+            <?php /* end Fix JS log */ ?>
+        </script>
+
+    <?php endif; ?>
+<?php else: ?><?php /* default method for load RequireJS */ ?>
+    <script>
+        var requireFullReady = true;
+
+        var waiting_init = null;
+        function waitForRequireJS() {
+
+            if (typeof requirejs === "undefined") {
+                setTimeout(waitForRequireJS, 49);
+                return;
+            }
+            clearInterval(waiting_init);
+
+            require(["JQ_WebVitals/js/mage/apply/scripts-faster", "JQ_WebVitals/js/mage/apply/main-faster", "mage/apply/main"], function (scriptsfaster, magefaster, mage) {
+                magefaster.apply();
+            });
+        }
+        waiting_init = setInterval(waitForRequireJS, 49);
+    </script>
+<?php endif; ?>

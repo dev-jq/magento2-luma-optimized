@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<!doctype html>
+<html <?= /* @noEscape */ $htmlAttributes ?>>
+<head <?= /* @noEscape */ $headAttributes ?>>
+    <?= /* @noEscape */ $requireJs ?>
+    <?= /* @noEscape */ str_replace('<meta charset="utf-8"/>', '', $headContent); ?> <?php /* <meta charset="utf-8" moved to require_js.phtml to the top of head */ ?>
+    <?= /* @noEscape */ $headAdditional ?>
+</head>
+<body data-container="body"
+      data-mage-init='{"loaderAjax": {}, "loader": { "icon": "<?= /* @noEscape */ $loaderIcon ?>"}}'
+      <?= /* @noEscape */ $bodyAttributes ?>>
+<?= /* @noEscape */ $layoutContent ?>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="css/styles-l.css" />
+        <css src="css/styles-m.css" />
+        <remove src="mage/calendar.css"/>
+        <remove src="mage/polyfill.js"/>
+
+        <!--Optimization: requireJS deleted and call in custom way under -->
+        <!--<remove src="requirejs/require.js"/>-->
+    </head>
+
+    <body>
+        <referenceBlock name="require.js">
+            <block class="Magento\Framework\View\Element\Template" name="head.additional.first" as="head.additional.first" template="Magento_Theme::html/head_first.phtml"/>
+        </referenceBlock>
+        <referenceContainer name="after.body.start">
+            <referenceBlock name="cookie-status-check" remove="true"/>
+        </referenceContainer>
+        <move element="critical_css_block" destination="head.additional.first" />
+    </body>
+
+</page>

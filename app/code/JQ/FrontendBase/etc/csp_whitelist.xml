@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="localhost" type="host">http://localhost</value>
+                <value id="localhost-https" type="host">https://localhost</value>
+                <value id="localhost-bs" type="host">http://localhost:3000</value>
+                <value id="localhost-bs-https" type="host">https://localhost:3000</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

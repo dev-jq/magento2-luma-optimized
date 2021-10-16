@@ -1,0 +1,14 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* @var $block \Magento\Cms\Block\Widget\Block */
+
+?>
+<?php if($block->getText() != null || $block->getText() != ''): ?>
+    <div class="widget block block-static-block">
+        <?= /* @noEscape */ $block->getText() ?>
+    </div>
+<?php endif; ?>

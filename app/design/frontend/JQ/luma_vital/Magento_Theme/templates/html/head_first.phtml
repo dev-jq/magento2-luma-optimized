@@ -1,0 +1,14 @@
+<?php
+$routeName = $this->getRequest()->getRouteName() ;
+$controllerName = $this->getRequest()->getControllerName();
+$actionName = $this->getRequest()->getActionName();
+?>
+<style id="for-performance">
+    @font-face {
+        font-family: 'luma-icons';
+        src: url('<?= $block->escapeUrl($block->getViewFileUrl('/')) ?>/fonts/Luma-Icons.woff2') format('woff2');
+        font-weight: normal;font-style: normal;font-display: swap;
+    }
+    .lazy-css-render{content-visibility:auto}img[src="#"],img:not([src]){visibility:hidden}script[type="custom/lazy"]{display:none}
+</style>
+<?= $block->getChildHtml('') ?>

@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<?php
+$routeName = $this->getRequest()->getRouteName();
+$controllerName = $this->getRequest()->getControllerName();
+$actionName = $this->getRequest()->getActionName();
+?>
+
+<script>
+    <?php /* lazy image backgrounds with data-lazy-background="..." or data-lazy-background-mobile="..." */ ?>
+    const lazyBgImages = document.querySelectorAll('[data-lazy-background]');
+    const lazyBgImageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const lazyBg = entry.target;
+                if(window.innerWidth < 768 && lazyBg.dataset.lazyBackgroundMobile) {
+                    lazyBg.style = lazyBg.dataset.lazyBackgroundMobile;
+                    lazyBg.classList.add('background-lazyloaded');
+                    lazyBg.removeAttribute('data-lazy-background-mobile');
+                } else {
+                    lazyBg.style = lazyBg.dataset.lazyBackground;
+                    lazyBg.classList.add('background-lazyloaded');
+                    lazyBg.removeAttribute('data-lazy-background');
+                }
+                observer.unobserve(lazyBg);
+            }
+        });
+    });
+
+    lazyBgImages.forEach((lazyBg) => {
+        lazyBgImageObserver.observe(lazyBg);
+    });
+    <?php /* end lazy image backgrounds */ ?>
+
+    <?php /* custom tag <script type="custom/lazy"> functionality */ ?>
+    var scriptsExecuted = false;
+    var head = document.getElementsByTagName('head')[0] || document.documentElement;
+
+    function executeScripts() {
+        var fscripts = document.querySelectorAll('script[type="custom/lazy"]');
+        [].forEach.call(fscripts, function(fscript) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.dataset.info = 'lazyloaded';
+            if (fscript.hasAttributes()) {
+                for (var attributeKey in fscript.attributes) {
+                    if (fscript.attributes.hasOwnProperty(attributeKey)) {
+                        if(fscript.attributes[attributeKey].name != 'type') {
+                            script[fscript.attributes[attributeKey].name] = fscript.attributes[attributeKey].value || true;
+                        }
+                    }
+                }
+            }
+            script.appendChild(document.createTextNode(fscript.innerText));
+            head.insertBefore(script, head.firstChild);
+            fscript.remove();
+        });
+    }
+
+    function initLazyScripts(time = 49) {
+        if (scriptsExecuted) {
+            return;
+        }
+
+        scriptsExecuted = true;
+        setTimeout(function() {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(executeScripts, {
+                    timeout: 500
+                })
+            } else {
+                executeScripts();
+            }
+        }, time);
+    }
+
+    <?php if(
+        ($routeName == 'cms') ||
+        ($routeName == 'catalog' && $controllerName == 'product' && $actionName == 'view') ||
+        ($routeName == 'catalog' && $controllerName == 'category' && $actionName == 'view') ||
+        ($routeName == 'catalogsearch' && $controllerName == 'result' && $actionName == 'index')):
+    ?>
+    <?php else: ?>
+        var waiting_custom_bbe = null;
+        function waitForRequireJS() {
+
+            <?php /* check that the RequireJS object has been defined */ ?>
+            if (typeof require === "undefined") {
+                setTimeout(waitForRequireJS, 49);
+                return;
+            }
+            clearInterval(waiting_custom_bbe);
+            initLazyScripts(1000);
+
+        }
+        waiting_custom_bbe = setInterval(waitForRequireJS, 49);
+    <?php endif; ?>
+    <?php /* end lazy scripts */ ?>
+</script>
