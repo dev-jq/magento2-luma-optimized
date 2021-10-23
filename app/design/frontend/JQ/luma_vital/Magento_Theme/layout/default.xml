@@ -7,6 +7,7 @@
             <block class="Magento\Framework\View\Element\Template" name="custom.before.body.end" template="Magento_Theme::html/custom-before-body-end.phtml" before="-" />
             <block class="Magento\Framework\View\Element\Template" name="navigation.sticky" template="Magento_Theme::html/sticky-header.phtml" />
             <block class="Magento\Framework\View\Element\Template" name="back.to.top" template="Magento_Theme::html/back-to-top.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="pinned.promobar.onscroll" template="Magento_Theme::html/promobar-pinned.phtml" />
         </referenceContainer>
         <referenceContainer name="footer-container" htmlClass="lazy-css-render page-footer"/>
         <move element="navigation.sections" destination="header.container" after="header-wrapper" />
