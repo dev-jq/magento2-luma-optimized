@@ -5,6 +5,13 @@
         <remove src="mage/calendar.css"/>
         <remove src="mage/polyfill.js"/>
 
+        <remove src="fonts/Luma-Icons.woff2"/>
+        <!-- <font src="fonts/M2-Luma-Material/M2-Luma-Material.woff2"/> -->
+        <!-- <font src="fonts/M2-Luma-Ikonate/M2-Luma-Ikonate.woff2"/> -->
+        <font src="fonts/M2-Luma-Feather/M2-Luma-Feather.woff2"/>
+        <!-- <font src="fonts/M2-Luma-Bootstrap/M2-Luma-Bootstrap"/> -->
+
+
         <!--Optimization: requireJS deleted and call in custom way under -->
         <!--<remove src="requirejs/require.js"/>-->
     </head>
