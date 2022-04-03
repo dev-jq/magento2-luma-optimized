@@ -10,6 +10,7 @@
             </action>
         </referenceBlock>
         <move element="page.main.title" destination="content.top" before="-" />
+        <move element="category.view.container" destination="content.top" after="page.main.title" />
 
         <referenceBlock name="head.additional.first">
             <!-- <block class="Magento\Catalog\Block\Category\View" name="category.image.preload" template="Magento_Catalog::category/image-preload.phtml"/> -->
