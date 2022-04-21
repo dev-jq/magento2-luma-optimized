@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var $block \Magento\Swatches\Block\Product\Renderer\Configurable */
+/** @var \Magento\Swatches\ViewModel\Product\Renderer\Configurable $configurableViewModel */
+$configurableViewModel = $block->getConfigurableViewModel()
+?>
+<?php
+$swatches = json_decode($block->getJsonSwatchConfig(), true);
+$swatchesCount = 0;
+$minHeight = 0;
+if(isset($swatches[93])) { // attribute id (Color)
+    $swatchesCount += count($swatches[93]) - 1;
+    $minHeight += 57;
+}
+if(isset($swatches[144])) { // attribute id (Size)
+    $swatchesCount += count($swatches[144]) - 1;
+    $minHeight += 131;
+}
+?>
+
+<div class="swatch-opt" data-role="swatch-options"<?php echo ($swatchesCount != null) ? ' data-swatch-count="'.$swatchesCount.'"' : ''; ?>></div>
+<style>
+    .swatch-opt:empty{position:relative;min-height:<?= $minHeight ?>px}
+    .swatch-opt:empty:after{content:'';background-size:contain;background-position:center center;width:40px;height:40px;margin:0 auto;position:absolute;left:50%;margin-left:-20px;top:50%;margin-top:-20px;background-image: url(<?= $block->escapeUrl($block->getViewFileUrl('/')) ?>/images/loader-1.gif)}
+</style>
+<script type="text/x-magento-init">
+    {
+        "[data-role=swatch-options]": {
+            "Magento_Swatches/js/swatch-renderer": {
+                "jsonConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonConfig() ?>,
+                "jsonSwatchConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonSwatchConfig() ?>,
+                "mediaCallback": "<?= $block->escapeJs($block->escapeUrl($block->getMediaCallback())) ?>",
+                "gallerySwitchStrategy": "<?= $block->escapeJs($block->getVar('gallery_switch_strategy', 'Magento_ConfigurableProduct')) ?: 'replace'; ?>",
+                "jsonSwatchImageSizeConfig": <?= /* @noEscape */ $block->getJsonSwatchSizeConfig() ?>,
+                "showTooltip": <?= $block->escapeJs($configurableViewModel->getShowSwatchTooltip()) ?>
+            }
+        },
+        "*" : {
+            "Magento_Swatches/js/catalog-add-to-cart": {}
+        }
+    }
+</script>
