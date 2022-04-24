@@ -432,6 +432,34 @@
         border: @tooltip__border-width solid @tooltip__border-color;
         padding: 10px;
     }
+
+    // Icon show/hide password
+    .control {
+        position: relative;
+        & > input[type="password"] {
+            padding-right: 30px;
+        }
+    }
+    .field-icon {
+        position: absolute;
+        z-index: 2;
+        width: 28px;
+        height: 25px;
+        right: 3px;
+        top: 50%;
+        margin-top: -12px;
+        cursor: pointer;
+    }
+    .field-icon.toggle-password.eye-close::before{
+        content:url('../Magento_Theme/images/eye-close.svg');
+    }
+    .field-icon.toggle-password.eye-open::before{
+        content:url('../Magento_Theme/images/eye-open.svg');
+    }
+    input[data-role="show-password"], label[for="show-password"] {
+        display: none !important;
+    }
+    // end icon show/hide password
 }
 
 //
