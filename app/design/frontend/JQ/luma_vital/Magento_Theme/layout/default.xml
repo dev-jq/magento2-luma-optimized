@@ -1,4 +1,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Magento_Theme::js/show-hide-password.js" defer="" />
+    </head>
     <body>
         <referenceBlock name="sale.reorder.sidebar" remove="true"/>
         <referenceBlock name="skip_to_content.target" remove="true"/>
