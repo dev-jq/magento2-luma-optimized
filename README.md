@@ -1,8 +1,8 @@
 # luma_vital - customized and optizmed Magento 2 theme
 
-![Luma vital category page](https://github.com/jq91/magento2-handy-snippets/blob/master/README-assets/luma-vital-category.png)
+![Luma vital category page](https://github.com/jq91/magento2-luma-optimized/blob/main/README-assets/luma-vital-category.png)
 
-![Luma vital product page](https://github.com/jq91/magento2-handy-snippets/blob/master/README-assets/luma-vital-product.png)
+![Luma vital product page](https://github.com/jq91/magento2-luma-optimized/blob/main/README-assets/luma-vital-product.png)
 
 ## Theme features
 - small colors customizations
