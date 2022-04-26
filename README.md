@@ -1,11 +1,33 @@
-# Luma_vital - customized and optizmed Mageto 2 theme
+# luma_vital - customized and optizmed Magento 2 theme
+
+![Luma vital category page](https://github.com/jq91/magento2-handy-snippets/blob/master/README-assets/luma-vital-category.png)
+
+![Luma vital product page](https://github.com/jq91/magento2-handy-snippets/blob/master/README-assets/luma-vital-product.png)
+
+## Theme features
+- small colors customizations
+- "lazy scripts"
+- sticky header
+- scroll to top button
+- up-scroll pined bottom bar
+- plus/minus quantity buttons
+- "M2-Luma-Feather" icons pack
+- close "X" icon in mobile menu
+- category products count number (after category title)
+- right-slide minicart
+- auto-open minicart after added product
+- ...
+- still in progress...
+
+## Keep in mind
 Speed-up your Magento 2 frontend performance! Google PageSpeed / Chrome Lighthouse over 95/100 points (on Desktop) and over 80/100 points on mobile devices. It's possible!
 
-1. Optimize images (=> https://tinypng.com)
+1. Optimize images :point_right: https://tinypng.com
 
-2. Lazyload off-screen images (=> https://github.com/aFarkas/lazysizes)
+2. Lazyload off-screen images :point_right: https://github.com/aFarkas/lazysizes
 
-3. Custom Google fonts load only localy (=> https://google-webfonts-helper.herokuapp.com/fonts), not from Google server!
+3. Custom Google fonts load only localy :point_right: https://google-webfonts-helper.herokuapp.com/fonts, not from Google server!
+
 3b. For font-family declatarion in style use: 
 font-display: swap;
 
@@ -22,6 +44,7 @@ font-display: swap;
 
 5. Separate styles for specific pages:
 - general (default styles-m.css and styles-l.css fo all pages)
+- for cart and checkout (styles-checkout-m.css and styles-checkout-l.css)
 - for homepage (styles-home-m.css and styles-home-l.css)
 - for catalog/search result (styles-catalog-m.css and styles-catalog-l.css)
 - for product (styles-product-m.css and styles-product-l.css)
@@ -30,20 +53,23 @@ font-display: swap;
 - and custom as needed (blog, etc.) 
 
 6. Always use Magento breakpoint directives in all .less files!
-(To avoid dupliacation styles in mobile i desktop file! Remember Magento 2 is 'mobile first' RWD => https://absolutecommerce.co.uk/blog/mobile-first-responsive-magento2-theme)
+(To avoid dupliacation styles in mobile i desktop file! Remember Magento 2 is 'mobile first' RWD :point_right: https://absolutecommerce.co.uk/blog/mobile-first-responsive-magento2-theme
 
-7. Remove unnecessery scripts and optimize another to load only on used page (=> https://medium.com/@jahvi/how-to-improve-magento-2-page-speed-insights-score-bb37e8946192)
+:point_right: See my "starter" .less file: https://github.com/jq91/magento2-handy-snippets/blob/master/_module.less
 
-8. Use critical style (=> https://jonassebastianohlsson.com/criticalpathcssgenerator/)
+7. Remove unnecessery scripts and optimize another to load only on used page :point_right: https://medium.com/@jahvi/how-to-improve-magento-2-page-speed-insights-score-bb37e8946192
+
+8. Use critical styles :point_right: https://jonassebastianohlsson.com/criticalpathcssgenerator/
 
 9. Move scripts from head to footer
 
-10. Enable css/js minification, cache and production mode
+10. Enable CSS/JS minification, cache and production mode.
 
-11. Veb Vitals:
-- pay attention for 'above the fold' elements
+11. Core Veb Vitals:
+- pay attention for 'Above The Fold' elements
 - better LCP: if 'above the fold' is an image or background image (e.g. slider) add to <head> preload tag to this image:
-  < link rel="preload" as="image" href="path/to/your/image.jpg" >
+  
+  `<link rel="preload" as="image" href="path/to/your/image.jpg">`
+  
 - NEVER use lazylaod for images that are in 'above the fold'!
-- dalay 3rd party scripts (GTM, Analytics, FB, etc.) => https://github.com/biggerpicturestudio/delaying-3rd-parties
--
+- dalay 3rd party scripts (GTM, Analytics, FB, etc.) :point_right: https://github.com/biggerpicturestudio/delaying-3rd-parties :star:
