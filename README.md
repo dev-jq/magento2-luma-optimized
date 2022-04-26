@@ -16,6 +16,7 @@
 - category products count number (after category title)
 - right-slide minicart
 - auto-open minicart after added product
+- show / hide eye-icon for password input
 - ...
 - still in progress...
 
