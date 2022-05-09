@@ -17,6 +17,7 @@
 - right-slide minicart
 - auto-open minicart after added product
 - show / hide eye-icon for password input
+- possibility to close all product tabs on Mobile
 - ...
 - still in progress...
 
