@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'jquery/ui'
+    'jquery-ui-modules/dialog'
 ], function ($) {
     'use strict';
 
