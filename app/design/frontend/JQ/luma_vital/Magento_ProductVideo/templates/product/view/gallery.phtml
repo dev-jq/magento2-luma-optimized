@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\ProductVideo\Block\Product\View\Gallery
+ */
+?>
+
+<?php
+$productHasVideo = false;
+$mediaGalleryDataJson = json_decode($block->getMediaGalleryDataJson());
+foreach ($mediaGalleryDataJson as $media) {
+    if($media->mediaType == 'external-video') {
+        $productHasVideo = true;
+    }
+}
+?>
+
+<?php if($productHasVideo): ?>
+    <script type="text/x-magento-init-faster">
+        {
+            "[data-gallery-role=gallery-placeholder]": {
+                "Magento_ProductVideo/js/fotorama-add-video-events": {
+                    "videoData": <?= /* @noEscape */ $block->getMediaGalleryDataJson() ?>,
+                    "videoSettings": <?= /* @noEscape */ $block->getVideoSettingsJson() ?>,
+                    "optionsVideoData": <?= /* @noEscape */ $block->getOptionsMediaGalleryDataJson() ?>
+                }
+            }
+        }
+    </script>
+    <script>
+        require(['jquery','underscore', 'domReady'], function($, _){
+            $(document).on('gallery:loaded', function(){
+                $(document).on('fotorama:showend',function (e, fotorama, extra) {
+                    if(_.isEmpty(fotorama.activeFrame.videoUrl)){
+                        return;
+                    }
+                    else{
+                        setTimeout(function(){
+                            fotorama.activeFrame.$stageFrame.trigger('click');
+                        }, 50)
+
+                    }
+                })
+            })
+        })
+    </script>
+<?php endif; ?>
