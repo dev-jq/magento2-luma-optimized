@@ -19,6 +19,7 @@
 - show / hide eye-icon for password input
 - possibility to close all product tabs on Mobile
 - auto-scroll to system messages
+- product video: iframe autoplay on thumbnail click
 - ...
 - still in progress...
 
