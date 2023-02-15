@@ -25,8 +25,6 @@
 - possibility to close all product tabs on Mobile
 - auto-scroll to system messages
 - product video: iframe autoplay on thumbnail click
-- ...
-- still in progress...
 
 ## Keep in mind
 Speed-up your Magento 2 frontend performance! Google PageSpeed / Chrome Lighthouse over 95/100 points (on Desktop) and over 80/100 points on mobile devices. It's possible!
