@@ -1,4 +1,4 @@
-# luma_vital - customized and optizmed Magento 2 theme
+# luma_vital - customized and optizmed Magento 2.3.x theme
 
 :heavy_check_mark: Magento 2.3.x - COMPATIBLE
 
