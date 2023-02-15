@@ -2,7 +2,7 @@
 
 :heavy_check_mark: Magento 2.3.x - COMPATIBLE
 
-:x: Magento 2.4.x - INCOMPATIBLE, but I'm working on releasing a PREMIUM template, optimized for Core Web Vitals and SEO, and much more than basic Magento Luma! :rocket: _Stay tuned!_
+:x: Magento 2.4.x - INCOMPATIBLE, but I'm working on releasing a PREMIUM template, optimized for Core Web Vitals and SEO, and much more than basic Magento Luma! :rocket: _Stay tuned_ and follow my new REPO: [jq91/M2-AzkarraTheme-for-Core-Web-Vitals-and-SEO](https://github.com/jq91/M2-AzkarraTheme-for-Core-Web-Vitals-and-SEO) for Magento 2.4.x! 
 
 
 ![Luma vital category page](https://github.com/jq91/magento2-luma-optimized/blob/main/README-assets/luma-vital-category.png)
