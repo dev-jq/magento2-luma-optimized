@@ -1,5 +1,10 @@
 # luma_vital - customized and optizmed Magento 2 theme
 
+:heavy_check_mark: Magento 2.3.x - COMPATIBLE
+
+:x: Magento 2.4.x - INCOMPATIBLE, but I'm working on releasing a PREMIUM template, optimized for Core Web Vitals and SEO, and much more than basic Magento Luma! :rocket: _Stay tuned!_
+
+
 ![Luma vital category page](https://github.com/jq91/magento2-luma-optimized/blob/main/README-assets/luma-vital-category.png)
 
 ![Luma vital product page](https://github.com/jq91/magento2-luma-optimized/blob/main/README-assets/luma-vital-product.png)
